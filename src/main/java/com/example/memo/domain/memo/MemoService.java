@@ -20,4 +20,8 @@ public class MemoService {
     public void create(String title, String text) {
         memoRepository.insert(title, text);
     }
+
+    public MemoEntity findById(long memoId) {
+        return memoRepository.findById(memoId);
+    }
 }

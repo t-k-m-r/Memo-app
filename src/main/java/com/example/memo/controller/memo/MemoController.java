@@ -39,4 +39,12 @@ public class MemoController {
         memoService.create(form.getTitle(), form.getText());
         return "redirect:memos/list";
     }
+
+    @GetMapping("/{memoId}")
+    public String showDetail(@PathVariable("memoId") long memoId, Model model) {
+
+        model.addAttribute("memo", memoService.findById(memoId));
+        return "memos/detail";
+
+    }
 }
