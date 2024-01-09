@@ -22,4 +22,9 @@ public class MemoController {
         model.addAttribute("memoList", memoService.findAll());
         return "memos/list";
     }
+
+    @GetMapping("/memo/create")
+    public String creationForm() {
+        return "memos/form";
+    }
 }
