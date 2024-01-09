@@ -4,18 +4,24 @@
     <title>一覧</title>
 </head>
 <body>
-<h1>一覧ページ</h1>
-<table>
-    <tr>
-        <th>タイトル</th>
-        <th>内容</th>
-        <th>更新日時</th>
-    </tr>
-    <tr th:each="memo : ${memoList}">
-        <td th:text="${memo.title}">(タイトル)</td>
-        <td th:text="${memo.text}">(テキスト)</td>
-        <td th:text="${memo.edit_time}">(更新日時)</td>
-    </tr>
-</table>
+<div class="container">
+    <h1>一覧ページ</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>タイトル</th>
+                <th>内容</th>
+                <th>更新日時</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            <tr th:each="memo : ${memoList}">
+                <td th:text="${memo.title}">(タイトル)</td>
+                <td th:text="${memo.text}">(テキスト)</td>
+                <td th:text="${memo.edit_time}">(更新日時)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
