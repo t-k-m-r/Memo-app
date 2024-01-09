@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -30,7 +32,10 @@ public class MemoController {
     }
 
     @PostMapping
-    public String create(MemoForm form) {
+    public String create(@Validated MemoForm form, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return showCreationForm(form);
+        }
         memoService.create(form.getTitle(), form.getText());
         return "redirect:memos/list";
     }
