@@ -15,10 +15,10 @@
             </tr>
         </thead>
         <tbody class="table-group-divider">
-            <tr th:each="memo : ${memoList}">
-                <td th:text="${memo.title}">(タイトル)</td>
-                <td th:text="${memo.text}">(テキスト)</td>
-                <td th:text="${memo.edit_time}">(更新日時)</td>
+            <tr th:each="memo : ${memoList}" th:object="${memo}">
+                <td><a th:href="@{/memos/{id}(id=*{id})}" th:text="*{title}">(タイトル)</a></td>
+                <td><a th:href="@{/memos/{id}(id=*{id})}" th:text="*{text}">(テキスト)</a></td>
+                <td><a th:href="@{/memos/{id}(id=*{id})}" th:text="*{edit_time}">(更新日時)</a></td>
             </tr>
         </tbody>
     </table>
