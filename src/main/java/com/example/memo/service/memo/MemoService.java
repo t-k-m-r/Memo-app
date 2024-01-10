@@ -24,7 +24,13 @@ public class MemoService {
         return memoRepository.findById(memoId);
     }
 
+    @Transactional
     public void update(MemoEntity entity) {
         memoRepository.update(entity);
+    }
+
+    @Transactional
+    public void delete(long memoId) {
+        memoRepository.delete(memoId);
     }
 }

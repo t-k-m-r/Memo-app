@@ -60,4 +60,10 @@ public class MemoController {
         memoService.update(entity);
         return "redirect:/memos/list";
     }
+
+    @DeleteMapping("/{memoId}")
+    public String delete(@PathVariable("memoId") long memoId) {
+        memoService.delete(memoId);
+        return "redirect:/memos/list";
+    }
 }

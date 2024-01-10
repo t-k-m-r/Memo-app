@@ -25,4 +25,7 @@ public interface MemoRepository {
             WHERE id = #{entity.id}
             """)
     void update(@Param("entity") MemoEntity entity);
+
+    @Delete("DELETE FROM memos WHERE id = #{memoId}")
+    void delete(@Param("memoId") long memoId);
 }
