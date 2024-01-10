@@ -1,18 +1,12 @@
 package com.example.memo.controller.memo;
 
-import com.example.memo.domain.MemoEntity;
-import com.example.memo.domain.memo.MemoService;
+import com.example.memo.service.memo.MemoService;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,24 +21,43 @@ public class MemoController {
     }
 
     @GetMapping("/create")
-    public String showCreationForm(MemoForm memoForm) {
+    public String showCreationForm(MemoForm memoForm, Model model) {
+        model.addAttribute("mode", "CREATE");
         return "memos/form";
     }
 
     @PostMapping
-    public String create(@Validated MemoForm form, BindingResult bindingResult) {
+    public String create(@Validated MemoForm form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return showCreationForm(form);
+            return showCreationForm(form, model);
         }
-        memoService.create(form.getTitle(), form.getText());
+        memoService.create(form.toEntity());
         return "redirect:memos/list";
     }
 
     @GetMapping("/{memoId}")
     public String showDetail(@PathVariable("memoId") long memoId, Model model) {
-
         model.addAttribute("memo", memoService.findById(memoId));
         return "memos/detail";
+    }
 
+    @GetMapping("/{memoId}/edit")
+    public String showEditForm(@PathVariable("memoId") long memoId, Model model) {
+        model.addAttribute("memoForm", memoService.findById(memoId));
+        model.addAttribute("mode", "EDIT");
+        return "memos/form";
+    }
+
+    @PutMapping("/{memoId}")
+    public String update(@PathVariable("memoId") long memoId,
+                         @Validated MemoForm form,
+                         BindingResult bindingResult,
+                         Model model) {
+        if (bindingResult.hasErrors()) {
+            return showEditForm(memoId, model);
+        }
+        var entity = form.toEntity(memoId);
+        memoService.update(entity);
+        return "redirect:/memos/list";
     }
 }

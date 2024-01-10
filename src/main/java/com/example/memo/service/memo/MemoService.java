@@ -1,11 +1,10 @@
-package com.example.memo.domain.memo;
+package com.example.memo.service.memo;
 
-import com.example.memo.domain.MemoEntity;
+import com.example.memo.repository.memo.MemoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -17,11 +16,15 @@ public class MemoService {
     }
 
     @Transactional
-    public void create(String title, String text) {
-        memoRepository.insert(title, text);
+    public void create(MemoEntity entity) {
+        memoRepository.insert(entity);
     }
 
     public MemoEntity findById(long memoId) {
         return memoRepository.findById(memoId);
+    }
+
+    public void update(MemoEntity entity) {
+        memoRepository.update(entity);
     }
 }

@@ -6,7 +6,9 @@
 <body>
 <div class="container">
     <h1>入力フォーム</h1>
-    <form th:action="@{/memos}" th:method="post" th:object="${memoForm}">
+    <form th:action="${mode == 'CREATE'} ? @{/memos} : @{/memos/{id}(id=${memoForm.id})}"
+          th:method="${mode == 'CREATE'} ? post : put"
+          th:object="${memoForm}">
         <div class="mb-3 has-validation">
             <label for="titleInput" class="form-label">タイトル</label>
             <input type="text" class="form-control" th:errorclass="is-invalid" id="titleInput" placeholder="タイトルを入力してください。" th:field="*{title}">
